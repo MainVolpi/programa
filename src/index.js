@@ -150,3 +150,21 @@ submitButton.addEventListener('click', () => {
         load();
     }
 });
+const button = document.getElementById('botao')
+
+button.addEventListener('click', function () {
+    const button = document.getElementById("botao");
+    const menuDiv = document.getElementById("menu");
+    console.log(button)
+
+
+    if (button.value === "x") {
+        menuDiv.style.display = "none";
+        button.value = '?'
+
+    } else {
+        menuDiv.style.display = "block";
+        button.value = 'x'
+    }
+
+})

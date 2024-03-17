@@ -22,6 +22,9 @@ body {
     padding: 12px 24px;
     text-align: center;
     color: #6bc0fe;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .nav h1 {
@@ -207,4 +210,29 @@ p {
         height: 150px;
         font-size: 18px;
     }
+}
+section#menu {
+    text-align: center;
+    background-color: white;
+    height: 500px;
+    width: 500px;
+    border-radius: 7px;
+    margin: auto; 
+    padding: 20px; position: absolute; top: 100px;
+    left: 50%;
+    margin-left: -250px;
+}
+
+h1 {
+    font: normal arial;
+    font-size: 36px;
+}
+
+p {
+    text-align: left;
+    color: black;
+}
+
+h3 {
+    text-align: left;
 }
