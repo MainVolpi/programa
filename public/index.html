@@ -1,19 +1,68 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Programa</title>
 </head>
+
 <body>
-    <h1>Ola mundo</h1>
-    <footer>    
-        <p>Copyright © 2023 Apple Inc. All rights reserved.</p>
+    <div class="nav">
+        <h1>Dias de Prova</h1>
+    </div>
+    <div class="container">
+        <div class="form">
+            <div id="form">
+                <div class="form-group
+                ">
+                    <label for="nome">Nome</label>
+                    <input type="text" id="nome" name="nome">
+                </div>
+                <div class="form-group
+                ">
+                    <label for="data">Data</label>
+                    <input type="date" id="data" name="data">
+                </div>
+                <div class="form-group
+                ">
+                    <label for="tipo">Dificuldade</label>
+                    <input type="number" id="dificuldade" name="dificuldade">
+                </div>
+                <div class="form-group
+                ">
+                    <button id="submit">Adicionar</button>
+                </div>
+            </div>
+        </div>
+        <div class="list">
+            <h2>Provas e Trabalhos</h2>
+            <ul id="list">
+                <h2>Calendario</h2>
+                <!-- CALENDARIO -->
+
+                <div id="header">
+                    <div id="monthDisplay"></div>
+
+                    <div>
+                        <button class="calendarButton" id="backButton">Voltar</button>
+                        <button class="calendarButton" id="nextButton">Próximo</button>
+                    </div>
+
+                </div>
+
+                <!-- div dinamic -->
+                <div id="calendar"></div>
+            </ul>
+        </div>
+    </div>
+    <footer>
         <p>Developed with &hearts; by: </p>
         <p>
-        Volpe, Bruno.
-        Volpi, Raul.
+            Bruno Volpe;
+            Raul Volpi
         </p>
     </footer>
-      
+
     <script src="./assets/js/bundle.js"></script>
 </body>
+
 </html>
