@@ -3,7 +3,7 @@ import './style.css';
 // variáveis globais
 let nav = 0;
 let clicked = null;
-let events = localStorage.getItem('events') ? JSON.parse(localStorage.getItem('events')) : [];
+let events = localStorage.getItem('events') ? JSON.parse(localStorage.getItem('events')) : {};
 
 // --------
 const calendar = document.getElementById('calendar'); // div calendar:
@@ -47,20 +47,19 @@ function load() {
         if (i > paddinDays) {
             dayS.innerText = i - paddinDays;
 
-            const eventDay = events.find(event => event.date === dayString);
+            const eventDay = events[dayString];
 
             if (i - paddinDays === day && nav === 0) {
                 dayS.id = 'currentDay';
             }
 
             if (eventDay) {
-                for (let i = 0; i < eventDay.length; i++) {
-                    console.log(1)
-                }
-                const eventDiv = document.createElement('div');
-                eventDiv.classList.add('event');
-                eventDiv.innerText = eventDay.title;
-                dayS.appendChild(eventDiv);
+                eventDay.forEach(event => {
+                    const eventDiv = document.createElement('div');
+                    eventDiv.classList.add('event');
+                    eventDiv.innerText = event.title;
+                    dayS.appendChild(eventDiv);
+                });
             }
         } else {
             dayS.classList.add('padding');
@@ -71,19 +70,19 @@ function load() {
 }
 
 function saveEvent(dateString, title) {
-    events.push({
-        date: dateString,
-        title: title
-    });
+    if (!events[dateString]) {
+        events[dateString] = [];
+    }
+
+    events[dateString].push({ title });
 
     localStorage.setItem('events', JSON.stringify(events));
 }
 
 function deleteEvent(dateToDelete) {
-    events = events.filter(event => event.date !== dateToDelete);
+    delete events[dateToDelete];
     localStorage.setItem('events', JSON.stringify(events));
 }
-
 
 // botões 
 function buttons() {
@@ -115,7 +114,7 @@ submitButton.addEventListener('click', () => {
     if (nomeLength == 0) {
         alert('[ERRO] Nome incompleto! Por favor, insira um nome.');
     } else if (nomeLength > 255) {
-        alert('[ERRO] O nome inserido é muito longo. Por favor, insira um nome mais curto.');
+        alert('Vai tomar no seu cu, filha da puta');
     }
     if (dificuldadeLength == 0) {
         alert('[ERRO] dificuldade não especificada! Por favor, forneça uma importância.');
@@ -127,17 +126,25 @@ submitButton.addEventListener('click', () => {
     } else {
         // Criando a data no formato apropriado
         const date = new Date(data.value);
-        const dateString = `${date.getMonth() + 1}/${date.getDate() + 1}/${date.getFullYear()}`;
+        let dateString = `${date.getMonth() + 1}/${date.getDate() + 1}/${date.getFullYear()}`;
 
         // Salvando o evento
-        const diasParaProva = 12
+        const diaHoje = new Date()
+
+        const umDiaEmMilissegundos = 24 * 60 * 60 * 1000; // número de milissegundos em um dia
+        const diasParaProva = Math.ceil((date - diaHoje) / umDiaEmMilissegundos); // arredonda para cima para considerar o dia atual também
         const diasEstudar = Math.round((dificuldade.value * diasParaProva) / 10);
 
-        for (let c = 0; c < diasEstudar; c++) {
-            saveEvent(dateString, 'estudar' + ' ' + nome.value)
+        saveEvent(dateString, nome.value);
+
+        for (let c = diasEstudar; c >= 0; c--) {
+            const novaData = new Date(date.getTime() - c * umDiaEmMilissegundos);
+            if (novaData < diaHoje) continue; // Se a nova data for anterior à data atual, pular para a próxima iteração
+            const estudarMessagem = `estudar ${nome.value}`;
+            dateString = `${novaData.getMonth() + 1}/${novaData.getDate()}/${novaData.getFullYear()}`;
+            saveEvent(dateString, estudarMessagem);
         }
 
-        saveEvent(dateString, nome.value);
 
         // Recarregando o calendário após salvar o evento
         load();
