@@ -88,6 +88,20 @@ footer h1 {
     font-size: 2rem;
 }
 
+#botao {
+    padding: 10px;
+    background-color: #1250a0;
+    border: 0;
+    cursor: pointer;
+    margin-left: 20px;
+    transition: all 0.3s ease;
+    border-radius: 50%;
+}
+
+#botao:hover {
+    background-color: #3783ff;
+}
+
 .list {
     display: flex;
     margin-top: 50px;
@@ -212,6 +226,7 @@ p {
     }
 }
 section#menu {
+    display: none;
     text-align: center;
     background-color: white;
     height: 500px;
